@@ -1,0 +1,151 @@
+<.flash_group flash={@flash} />
+
+<div class="container m-auto my-24 max-w-2xl text-xl text-gray-700">
+  <h1 class="text-3xl text-gray-900">Example Interview App</h1>
+  <h2 class="mt-8 font-semibold text-xl">Overview</h2>
+  <p class="mt-4">
+    This is an example Phoenix application intented to demonstrate some of the real-world problems
+    you might encounter when building a web application.
+  </p>
+  <p class="mt-2">
+    This project contains the following routes/pages:
+  </p>
+  <ul class="mt-4 text-base text-gray-500">
+    <li class="mb-4 p-4 bg-gray-100">
+      <.link navigate={~p"/geo"} class="font-semibold leading-6 text-cyan-700 hover:text-cyan-600">
+        /geo
+      </.link>
+      - A simple LiveView that outputs the user's IP address and location (country).
+    </li>
+    <li class="mb-4 p-4 bg-gray-100">
+      <.link
+        navigate={~p"/contracts"}
+        class="font-semibold leading-6 text-cyan-700 hover:text-cyan-600"
+      >
+        /contracts
+      </.link>
+      - A small React.js application listing Contracts data.
+    </li>
+    <li class="p-4 bg-gray-100">
+      <.link
+        navigate={~p"/exchange"}
+        class="font-semibold leading-6 text-cyan-700 hover:text-cyan-600"
+      >
+        /exchange
+      </.link>
+      - A LiveView that shows the current exchange rate between USD and EUR dynamically.
+    </li>
+  </ul>
+  <h2 class="mt-8 font-semibold text-xl">Tasks</h2>
+  <p class="mt-4 max-w-2xl">
+    Your task is to implement the following features:
+  </p>
+  <ul class="ml-8 mt-4 list-decimal">
+    <li class="mb-8">
+      <p>
+        The
+        <.link
+          navigate={~p"/geo"}
+          class="font-semibold leading-6 text-cyan-700 hover:text-cyan-600"
+        >
+          /geo
+        </.link>
+        and
+        <.link
+          navigate={~p"/contracts"}
+          class="font-semibold leading-6 text-cyan-700 hover:text-cyan-600"
+        >
+          /contracts
+        </.link>
+        pages display IP address and geolocation data for the current user. Currently, this data is
+        hard-coded in each LiveView.
+      </p>
+      <p class="mt-2">
+        <b>Fetch the actual data from the connection and display it in each view.</b>
+      </p>
+      <p class="mt-2">
+        <em class="not-italic font-semibold text-sm uppercase text-gray-400 bg-gray-100 rounded-lg inline-block px-2 mb-2">
+          Notes/hints:
+        </em>
+        <ul class="ml-8 list-disc text-gray-600 text-base">
+          <li>This data is provided in various request headers</li>
+          <li>It is randomly generated each request for demonstration purposes</li>
+          <li>
+            Country images are available in the <pre class="text-base text-amber-600 bg-amber-50 inline">/priv/static/images/countries</pre> directory as SVGs
+          </li>
+          <li>
+            Ideally, this is parsed once and shared between both LiveViews
+          </li>
+        </ul>
+      </p>
+    </li>
+    <li class="mb-8">
+      <p>
+        The
+        <.link
+          navigate={~p"/contracts"}
+          class="font-semibold leading-6 text-cyan-700 hover:text-cyan-600"
+        >
+          /contracts
+        </.link>
+        page is a React app, which is hydrated from a LiveView. It contains a list of contracts, which represent an individual's sent, invoiced, completed, and drafted
+        agreements. Each contract includes a name, status, timestamps, and payment information.
+      </p>
+      <p class="mt-2"><b>Use the provided UI library to output and style contract and payment
+          data however you see fit.</b> <em>Get creative!</em></p>
+      <p class="mt-2">
+        <em class="not-italic font-semibold text-sm uppercase text-gray-400 bg-gray-100 rounded-lg inline-block px-2 mb-2">
+          Notes/hints:
+        </em>
+        <ul class="ml-8 list-disc text-gray-600 text-base">
+          <li>
+            This example uses
+            <a
+              href="https://www.radix-ui.com/"
+              target="_blank"
+              class="font-semibold leading-6 text-cyan-700 hover:text-cyan-600"
+            >
+              Radix UI
+            </a>
+            and is already pre-installed.
+          </li>
+          <li>
+            A light-weight React/LiveView bridge is used to render the app. JS-interop hooks like <pre class="text-base text-amber-600 bg-amber-50 inline">pushEvent</pre> and <pre class="text-base text-amber-600 bg-amber-50 inline">handleEvent</pre> are available to you.
+          </li>
+        </ul>
+      </p>
+    </li>
+    <li class="mb-8">
+      <p>
+        The
+        <.link
+          navigate={~p"/exchange"}
+          class="font-semibold leading-6 text-cyan-700 hover:text-cyan-600"
+        >
+          /exchange
+        </.link>
+        page is a LiveView which displays real-time currency exchange information between two currencies. It polls the exchange rate
+        every 1.5 seconds from the database - displaying what we have on file.
+      </p>
+      <p class="mt-2">
+        <b>
+          Use any OTP construct to fetch and store an updated exchange rate in the database every 1-5 seconds.
+        </b>
+      </p>
+      <p class="mt-2">
+        <em class="not-italic font-semibold text-sm uppercase text-gray-400 bg-gray-100 rounded-lg inline-block px-2 mb-2">
+          Notes/hints:
+        </em>
+        <ul class="ml-8 list-disc text-gray-600 text-base">
+          <li>
+            Exchange rates can be fetched directly from the <pre class="text-base text-amber-600 bg-amber-50 inline">Currency.current_exchange_rate/2</pre> method.
+          </li>
+          <li>
+            No external API requests are needed for this task - just use the provided method.
+          </li>
+          <li>This should be a separate Process, ideally supervised.</li>
+        </ul>
+      </p>
+    </li>
+  </ul>
+</div>
