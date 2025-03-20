@@ -4,11 +4,11 @@ defmodule InterviewWeb.ContractsLive do
   alias Interview.Contracts
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, %{"ip" => ip} = _session, socket) do
     socket =
       socket
       |> assign_contracts()
-      |> assign_new(:ip_address, fn -> "10.20.30.40" end)
+      |> assign_new(:ip_address, fn -> ip end)
 
     {:ok, assign_contracts(socket)}
   end

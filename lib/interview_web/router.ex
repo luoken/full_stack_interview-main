@@ -8,6 +8,7 @@ defmodule InterviewWeb.Router do
     plug :put_root_layout, html: {InterviewWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug InterviewWeb.Plugs.GetLocation
   end
 
   pipeline :api do

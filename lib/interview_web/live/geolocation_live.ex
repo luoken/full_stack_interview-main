@@ -2,11 +2,11 @@ defmodule InterviewWeb.GeolocationLive do
   use InterviewWeb, :live_view
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, %{"country" => country, "ip" => ip} = _session, socket) do
     socket =
       socket
-      |> assign_new(:ip_address, fn -> "1.1.1.1" end)
-      |> assign_new(:country, fn -> "US" end)
+      |> assign_new(:ip_address, fn -> ip end)
+      |> assign_new(:country, fn -> country end)
 
     {:ok, socket}
   end
