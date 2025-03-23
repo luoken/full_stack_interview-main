@@ -17,7 +17,8 @@ defmodule Interview.Application do
       # Start a worker by calling: Interview.Worker.start_link(arg)
       # {Interview.Worker, arg},
       # Start to serve requests, typically the last entry
-      InterviewWeb.Endpoint
+      InterviewWeb.Endpoint,
+      Exchange.Supervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
