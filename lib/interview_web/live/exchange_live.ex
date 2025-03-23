@@ -1,13 +1,17 @@
 defmodule InterviewWeb.ExchangeLive do
   use InterviewWeb, :live_view
 
+  alias Exchange.Poller
   alias Interview.Currency
 
   @impl true
   def mount(_params, _session, socket) do
     socket = assign(socket, from: :USD, to: :EUR, rate: nil)
 
-    if connected?(socket), do: Process.send_after(self(), :get_current_rate, 800)
+    if connected?(socket) do
+      Process.send_after(self(), :get_current_rate, 800)
+      Process.send_after(self(), :update_rate, Enum.random(1_000..5_000))
+    end
 
     {:ok, socket}
   end
@@ -37,8 +41,15 @@ defmodule InterviewWeb.ExchangeLive do
   @impl true
   def handle_info(:get_current_rate, socket) do
     Process.send_after(self(), :get_current_rate, 1_500)
-
     {:noreply, assign(socket, rate: assign_rate(socket.assigns))}
+  end
+
+  @impl true
+  def handle_info(:update_rate, socket) do
+    Process.send_after(self(), :update_rate, Enum.random(1000..5000))
+    GenServer.cast(Poller, {socket.assigns.from, socket.assigns.to})
+
+    {:noreply, socket}
   end
 
   defp assign_rate(attrs) do
