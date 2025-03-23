@@ -27,4 +27,16 @@ defmodule Interview.Currency do
     from(e in ExchangeRate, where: e.from == ^from and e.to == ^to, select: e.rate)
     |> Repo.one!()
   end
+
+  def update_exchange_rate(from, to) do
+    current_rate = current_exchange_rate(from, to)
+    from_string = Atom.to_string(from)
+    to_string = Atom.to_string(to)
+
+    from(e in ExchangeRate,
+      where: e.from == ^from_string and e.to == ^to_string,
+      update: [set: [rate: ^current_rate]]
+    )
+    |> Repo.update_all([])
+  end
 end
