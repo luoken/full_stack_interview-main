@@ -4,11 +4,12 @@ defmodule InterviewWeb.ContractsLive do
   alias Interview.Contracts
 
   @impl true
-  def mount(_params, %{"ip" => ip} = _session, socket) do
+  def mount(_params, %{"ip" => ip, "country" => country} = _session, socket) do
     socket =
       socket
       |> assign_contracts()
       |> assign_new(:ip_address, fn -> ip end)
+      |> assign_new(:country, fn -> country end)
 
     {:ok, assign_contracts(socket)}
   end
@@ -25,6 +26,7 @@ defmodule InterviewWeb.ContractsLive do
       data-react-view="ContractsView"
       data-assigns-contracts={Jason.encode!(@contracts)}
       data-assigns-ip-address={Jason.encode!(@ip_address)}
+      data-assigns-country={Jason.encode!(@country)}
       phx-hook="LiveReact"
       phx-update="ignore"
     >
