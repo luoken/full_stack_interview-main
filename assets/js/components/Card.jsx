@@ -9,8 +9,9 @@ import Recipients from "../components/Recipient";
 // filter by status, filter by company, filter bydue date, filter by currency, filter by recurring,
 const Cards = (props) => {
   const { contract } = props;
+
   return (
-    <Box mt="10px">
+    <Box mt="10px" width="580px">
       <Card>
         <Tabs.Root defaultValue="company">
           <Tabs.List>
