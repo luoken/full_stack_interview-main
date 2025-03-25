@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Badge, Box, Text } from "@radix-ui/themes";
+import { Badge, Box, Strong, Text } from "@radix-ui/themes";
 
 const setContractStatus = (status) => {
   const capitalized_status = status.charAt(0).toUpperCase() + status.slice(1);
@@ -20,13 +20,13 @@ const Company = (props) => {
   return (
     <Box>
       <Text as="div">
-        <strong>Contract</strong>: {name}
+        <Strong>Contract</Strong>: {name}
       </Text>
       <Text as="div">
-        <strong>Company</strong>: {company_name}
+        <Strong>Company</Strong>: {company_name}
       </Text>
       <Text as="div">
-        <strong>Status</strong>: {setContractStatus(status)}{" "}
+        <Strong>Status</Strong>: {setContractStatus(status)}{" "}
       </Text>
     </Box>
   );

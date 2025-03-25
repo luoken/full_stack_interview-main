@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Badge, Box, Text } from "@radix-ui/themes";
+import { Badge, Box, Strong, Text } from "@radix-ui/themes";
 
 // In the future we may be able to have a function to add currency
 const currency = {
@@ -34,14 +34,14 @@ const Payment = (props) => {
   return (
     <Box>
       <Text as="div">
-        <strong>Due</strong>: {payment_due_at}
+        <Strong>Due</Strong>: {payment_due_at}
       </Text>
       <Text as="div">
-        <strong>Amount</strong>:{" "}
+        <Strong>Amount</Strong>:{" "}
         {handlePaymentCurrency(payment_amount, payment_currency)}
       </Text>
       <Text as="div">
-        <strong>Recurring</strong>:{handleRecurring(recurring)}
+        <Strong>Recurring</Strong>:{handleRecurring(recurring)}
       </Text>
     </Box>
   );

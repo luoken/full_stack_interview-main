@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Card, Text, Tabs } from "@radix-ui/themes";
+import { Box, Card, Tabs } from "@radix-ui/themes";
 
 import Company from "../components/Company";
 import Payment from "../components/Payment";
