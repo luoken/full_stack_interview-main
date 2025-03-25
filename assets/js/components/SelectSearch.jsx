@@ -10,6 +10,7 @@ const filterObject = {
 
 const SelectSearch = (props) => {
   const { filterTerm, handleFilterUpdate, handleChange, searchTerm } = props;
+
   return (
     <Flex mt="10px" gap="5px" flexGrow="2">
       <Box>
