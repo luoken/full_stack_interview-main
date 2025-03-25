@@ -7,31 +7,26 @@ import {
   CheckboxGroup,
   Flex,
   Heading,
-  Select,
   Separator,
   Text,
-  TextField,
   Theme,
 } from "@radix-ui/themes";
 
 import Cards from "../components/Card";
+import SelectSearch from "../components/SelectSearch";
 
 const ContractsView = (props) => {
   const { contracts, ipAddress, country } = props;
+
   const [filteredContracts, setFilteredContracts] = useState(contracts);
+
+  // Search bar
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("name");
 
+  // Filters
   const [statusFilter, setStatusFilter] = useState([]);
-
   const [recurringFilter, setRecurringFilter] = useState([]);
-
-  const filterObject = {
-    name: "Contract",
-    company_name: "Company",
-    recipient_name: "Recipient Name",
-    recipient_email: "Recipient Email",
-  };
 
   const cards = filteredContracts.map((contract) => (
     <Box>
@@ -162,34 +157,12 @@ const ContractsView = (props) => {
           </Box>
           <Flex direction="column">
             <Box>
-              <Flex mt="10px" gap="5px" flexGrow="2">
-                <Box>
-                  <Select.Root
-                    defaultValue="name"
-                    onValueChange={handleFilterUpdate}
-                  >
-                    <Select.Trigger />
-                    <Select.Content>
-                      <Select.Item value="name">Contract</Select.Item>
-                      <Select.Item value="company_name">Company</Select.Item>
-                      <Select.Item value="recipient_name">
-                        Recipient Name
-                      </Select.Item>
-                      <Select.Item value="recipient_email">
-                        Recipient Email
-                      </Select.Item>
-                    </Select.Content>
-                  </Select.Root>
-                </Box>
-                <Box width="100%">
-                  <TextField.Root
-                    placeholder={`Search ${filterObject[filterTerm]}..`}
-                    value={searchTerm}
-                    onChange={handleChange}
-                  ></TextField.Root>
-                </Box>
-              </Flex>
-
+              <SelectSearch
+                filterTerm={filterTerm}
+                handleFilterUpdate={handleFilterUpdate}
+                handleChange={handleChange}
+                searchTerm={searchTerm}
+              />
               {filteredContracts.length === 0 ? handleInitialLoad() : cards}
             </Box>
           </Flex>
