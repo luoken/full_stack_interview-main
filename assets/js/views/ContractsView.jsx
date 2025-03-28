@@ -16,10 +16,9 @@ import Cards from "../components/Card";
 import SelectSearch from "../components/SelectSearch";
 
 const ContractsView = (props) => {
-  const { contracts, ipAddress, country } = props;
+  const { contracts, ipAddress, country, pushEvent } = props;
 
   const [filteredContracts, setFilteredContracts] = useState(contracts);
-
   // Search bar
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("name");
@@ -162,6 +161,7 @@ const ContractsView = (props) => {
                 handleFilterUpdate={handleFilterUpdate}
                 handleChange={handleChange}
                 searchTerm={searchTerm}
+                pushEvent={pushEvent}
               />
               {filteredContracts.length === 0 ? handleInitialLoad() : cards}
             </Box>

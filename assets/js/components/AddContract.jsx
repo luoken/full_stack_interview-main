@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Box,
@@ -9,9 +9,45 @@ import {
   Text,
   Select,
 } from "@radix-ui/themes";
-// import { Switch } from "@radix-ui";
 
 const AddContract = (props) => {
+  const { pushEvent } = props;
+  const [contract, setContract] = useState({
+    recipient_name: "",
+    status: "pending",
+    name: "",
+    company_name: "",
+    payment_due_at: "",
+    payment_amount: "",
+    payment_currency: "USD",
+    recipient_email: "",
+    recurring: false,
+  });
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setContract({ ...contract, [name]: value });
+  };
+
+  const handlePaymentCurrency = (currency) => {
+    setContract({ ...contract, ["payment_currency"]: currency });
+  };
+
+  const handleStatusSelect = (status) => {
+    setContract({ ...contract, ["status"]: status });
+  };
+
+  const handleRecurringSwitch = (recurringSwitch) => {
+    setContract({ ...contract, ["recurring"]: recurringSwitch });
+  };
+
+  const handleSubmit = (event) => {
+    // console.log(contract);
+    // pushEvent(contract);
+    pushEvent(contract);
+  };
+
   return (
     <Dialog.Root style={{ float: "right" }}>
       <Dialog.Trigger asChild>
@@ -28,35 +64,71 @@ const AddContract = (props) => {
             <Text as="div" size="2" mb="1" weight="bold">
               Contract Name
             </Text>
-            <TextField.Root placeholder="Enter Contract Name" />
+            <TextField.Root
+              placeholder="Enter Contract Name"
+              name="name"
+              value={contract.name}
+              onChange={handleChange}
+            />
           </label>
           <label>
             <Text as="div" size="2" mb="1" weight="bold">
               Company Name
             </Text>
-            <TextField.Root placeholder="Enter Company Name" />
+            <TextField.Root
+              placeholder="Enter Company Name"
+              name="company_name"
+              value={contract.company_name}
+              onChange={handleChange}
+            />
           </label>
 
           <label>
             <Text as="div" size="2" mb="1" weight="bold">
               Recipient Name
             </Text>
-            <TextField.Root placeholder="Enter Recipient's Name " />
+            <TextField.Root
+              placeholder="Enter Recipient's Name "
+              name="recipient_name"
+              value={contract.recipient_name}
+              onChange={handleChange}
+            />
           </label>
 
           <label>
             <Text as="div" size="2" mb="1" weight="bold">
               Recipient Email
             </Text>
-            <TextField.Root placeholder="Enter Recipient's Email" />
+            <TextField.Root
+              placeholder="Enter Recipient's Email"
+              name="recipient_email"
+              value={contract.recipient_email}
+              onChange={handleChange}
+            />
+          </label>
+
+          <label>
+            <Text as="div" size="2" mb="1" weight="bold">
+              Payment Due Date
+            </Text>
+
+            <input
+              type="date"
+              name="payment_due_at"
+              value={contract.payment_due_at}
+              onChange={handleChange}
+            />
           </label>
 
           <label>
             <Text as="div" size="2" mb="1" weight="bold">
               Payment Amount
             </Text>
-            <div style={{ display: "inline-flex", width: "100%" }}>
-              <Select.Root defaultValue="USD">
+            <div style={{ display: "inline-flex", width: "100%", gap: "5px" }}>
+              <Select.Root
+                value={contract.payment_currency}
+                onValueChange={handlePaymentCurrency}
+              >
                 <Select.Trigger />
                 <Select.Content>
                   <Select.Item value="USD">USD</Select.Item>
@@ -66,6 +138,9 @@ const AddContract = (props) => {
               <TextField.Root
                 placeholder="Enter Payment Amount"
                 style={{ flexGrow: "1" }}
+                name="payment_amount"
+                value={contract.payment_amount}
+                onChange={handleChange}
               />
             </div>
           </label>
@@ -80,7 +155,11 @@ const AddContract = (props) => {
             >
               Recurring
             </Text>
-            <Switch />
+            <Switch
+              name="recurring"
+              value={contract.recurring}
+              onCheckedChange={handleRecurringSwitch}
+            />
           </label>
 
           <label style={{ display: "inline-flex" }}>
@@ -94,7 +173,11 @@ const AddContract = (props) => {
               Status
             </Text>
 
-            <Select.Root defaultValue="pending">
+            <Select.Root
+              name="status"
+              value={contract.status}
+              onValueChange={handleStatusSelect}
+            >
               <Select.Trigger />
               <Select.Content>
                 <Select.Item value="pending">Pending</Select.Item>
@@ -112,7 +195,7 @@ const AddContract = (props) => {
             </Button>
           </Dialog.Close>
           <Dialog.Close>
-            <Button>Save</Button>
+            <Button onClick={handleSubmit}>Save</Button>
           </Dialog.Close>
         </Flex>
       </Dialog.Content>

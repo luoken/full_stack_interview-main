@@ -37,4 +37,9 @@ defmodule InterviewWeb.ContractsLive do
   defp assign_contracts(socket) do
     assign(socket, :contracts, Contracts.list_contracts())
   end
+
+  def handle_event(event, _params, socket) do
+    IO.inspect(event, label: "EVENT")
+    {:noreply, socket}
+  end
 end

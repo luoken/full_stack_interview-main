@@ -10,7 +10,13 @@ const filterObject = {
 };
 
 const SelectSearch = (props) => {
-  const { filterTerm, handleFilterUpdate, handleChange, searchTerm } = props;
+  const {
+    filterTerm,
+    handleFilterUpdate,
+    handleChange,
+    searchTerm,
+    pushEvent,
+  } = props;
 
   return (
     <Flex mt="10px" gap="5px" flexGrow="2">
@@ -33,7 +39,7 @@ const SelectSearch = (props) => {
         ></TextField.Root>
       </Box>
       <Box>
-        <AddContract />
+        <AddContract pushEvent={pushEvent} />
       </Box>
     </Flex>
   );
