@@ -17,7 +17,9 @@ const AddContract = (props) => {
     status: "pending",
     name: "",
     company_name: "",
-    payment_due_at: "",
+    payment_due_date: new Date().toISOString().substring(0, 10),
+    payment_due_time: "00:00",
+    payment_due_at: new Date().toISOString(),
     payment_amount: "",
     payment_currency: "USD",
     recipient_email: "",
@@ -42,10 +44,30 @@ const AddContract = (props) => {
     setContract({ ...contract, ["recurring"]: recurringSwitch });
   };
 
-  const handleSubmit = (event) => {
-    // console.log(contract);
-    // pushEvent(contract);
-    pushEvent(contract);
+  const handleDate = (event) => {
+    event.preventDefault();
+    setContract({
+      ...contract,
+      ["payment_due_at"]: new Date(
+        `${event.target.value} ${contract["payment_due_time"]} UTC`,
+      ).toISOString(),
+      ["payment_due_date"]: event.target.value,
+    });
+  };
+
+  const handleTime = (event) => {
+    event.preventDefault();
+    setContract({
+      ...contract,
+      ["payment_due_at"]: new Date(
+        `${contract["payment_due_date"]} ${event.target.value} UTC`,
+      ).toISOString(),
+      ["payment_due_time"]: event.target.value,
+    });
+  };
+
+  const handleSubmit = () => {
+    pushEvent("update_contract", contract);
   };
 
   return (
@@ -114,9 +136,21 @@ const AddContract = (props) => {
 
             <input
               type="date"
-              name="payment_due_at"
-              value={contract.payment_due_at}
-              onChange={handleChange}
+              name="payment_due_date"
+              value={contract.payment_due_date}
+              onChange={handleDate}
+            />
+          </label>
+          <label>
+            <Text as="div" size="2" mb="1" weight="bold">
+              Payment Due Time
+            </Text>
+
+            <input
+              type="time"
+              name="payment_due_time"
+              value={contract.payment_due_time}
+              onChange={handleTime}
             />
           </label>
 
@@ -195,7 +229,9 @@ const AddContract = (props) => {
             </Button>
           </Dialog.Close>
           <Dialog.Close>
-            <Button onClick={handleSubmit}>Save</Button>
+            <Button onClick={handleSubmit} phx-click="update_contract">
+              Save
+            </Button>
           </Dialog.Close>
         </Flex>
       </Dialog.Content>

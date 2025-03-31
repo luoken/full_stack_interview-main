@@ -2,6 +2,7 @@ defmodule InterviewWeb.ContractsLive do
   use InterviewWeb, :live_view
 
   alias Interview.Contracts
+  alias Interview.Contracts.Contract
 
   @impl true
   def mount(_params, %{"ip" => ip, "country" => country} = _session, socket) do
@@ -38,8 +39,11 @@ defmodule InterviewWeb.ContractsLive do
     assign(socket, :contracts, Contracts.list_contracts())
   end
 
-  def handle_event(event, _params, socket) do
-    IO.inspect(event, label: "EVENT")
-    {:noreply, socket}
+  @impl true
+  def handle_event("update_contract", params, socket) do
+    Contract.changeset(%Contract{}, params)
+    |> Contracts.add_contract()
+
+    {:noreply, redirect(socket, to: "/contracts")}
   end
 end
