@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Flex, Select, TextField } from "@radix-ui/themes";
+import AddContract from "./AddContract";
 
 const filterObject = {
   name: "Contract",
@@ -9,7 +10,13 @@ const filterObject = {
 };
 
 const SelectSearch = (props) => {
-  const { filterTerm, handleFilterUpdate, handleChange, searchTerm } = props;
+  const {
+    filterTerm,
+    handleFilterUpdate,
+    handleChange,
+    searchTerm,
+    pushEvent,
+  } = props;
 
   return (
     <Flex mt="10px" gap="5px" flexGrow="2">
@@ -24,12 +31,15 @@ const SelectSearch = (props) => {
           </Select.Content>
         </Select.Root>
       </Box>
-      <Box width="100%">
+      <Box flexGrow="1">
         <TextField.Root
           placeholder={`Search ${filterObject[filterTerm]}..`}
           value={searchTerm}
           onChange={handleChange}
         ></TextField.Root>
+      </Box>
+      <Box>
+        <AddContract pushEvent={pushEvent} />
       </Box>
     </Flex>
   );
