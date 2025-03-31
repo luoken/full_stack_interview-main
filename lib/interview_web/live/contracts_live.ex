@@ -40,7 +40,7 @@ defmodule InterviewWeb.ContractsLive do
   end
 
   @impl true
-  def handle_event("update_contract", params, socket) do
+  def handle_event("add_contract", params, socket) do
     Contract.changeset(%Contract{}, params)
     |> Contracts.add_contract()
 

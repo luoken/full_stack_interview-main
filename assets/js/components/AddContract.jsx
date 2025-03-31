@@ -67,7 +67,7 @@ const AddContract = (props) => {
   };
 
   const handleSubmit = () => {
-    pushEvent("update_contract", contract);
+    pushEvent("add_contract", contract);
   };
 
   return (
@@ -229,7 +229,7 @@ const AddContract = (props) => {
             </Button>
           </Dialog.Close>
           <Dialog.Close>
-            <Button onClick={handleSubmit} phx-click="update_contract">
+            <Button onClick={handleSubmit} phx-click="add_contract">
               Save
             </Button>
           </Dialog.Close>
