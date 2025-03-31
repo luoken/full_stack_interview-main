@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Badge, Box, Flex, Theme } from "@radix-ui/themes";
+import { Avatar, Badge, Box, Flex, Select, Theme } from "@radix-ui/themes";
 
 import Cards from "../components/Card";
 import SelectSearch from "../components/SelectSearch";
@@ -46,6 +46,42 @@ const ContractsView = (props) => {
       setFilteredContracts(contracts);
     }
   };
+  const handleFilterSelect = (filter) => {
+    const [field, sortOrder] = filter.split("--");
+    if (sortOrder == "asc") {
+      setFilteredContracts(sort_asc(field));
+    } else {
+      setFilteredContracts(sort_desc(field));
+    }
+  };
+
+  const sort_asc = (field) => {
+    const newSort = [...filteredContracts].sort((a, b) => {
+      if (a[field] < b[field]) {
+        return -1;
+      } else if (a[field] > b[field]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return newSort;
+  };
+
+  const sort_desc = (field) => {
+    const newSort = [...filteredContracts].sort((a, b) => {
+      if (a[field] < b[field]) {
+        return 1;
+      } else if (a[field] > b[field]) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+
+    return newSort;
+  };
 
   return (
     <Theme accentColor="mint">
@@ -71,6 +107,68 @@ const ContractsView = (props) => {
                 searchTerm={searchTerm}
                 pushEvent={pushEvent}
               />
+              <Box pt="10px">
+                <span style={{ paddingRight: "10px" }}>Sort</span>
+                <Select.Root onValueChange={handleFilterSelect}>
+                  <Select.Trigger />
+                  <Select.Content>
+                    <Select.Item value="name--asc">Contract A-Z</Select.Item>
+                    <Select.Item value="name--desc">Contract Z-A</Select.Item>
+
+                    <Select.Item value="company_name--asc">
+                      Company Name A-Z
+                    </Select.Item>
+                    <Select.Item value="company_name--desc">
+                      Company Name Z-A
+                    </Select.Item>
+
+                    <Select.Item value="recipient_name--asc">
+                      Recipient Name A-Z
+                    </Select.Item>
+                    <Select.Item value="recipient_name--desc">
+                      Recipient Name Z-A
+                    </Select.Item>
+
+                    <Select.Item value="recipient_email--asc">
+                      Recipient Email A-Z
+                    </Select.Item>
+                    <Select.Item value="recipient_email--desc">
+                      Recipient Email Z-A
+                    </Select.Item>
+
+                    <Select.Item value="status--asc">Status A-Z</Select.Item>
+                    <Select.Item value="status--desc">Status Z-A</Select.Item>
+
+                    <Select.Item value="payment_due_at--asc">
+                      Payment Due At A-Z
+                    </Select.Item>
+                    <Select.Item value="payment_due_at--desc">
+                      Payment Due At Z-A
+                    </Select.Item>
+
+                    <Select.Item value="payment_currency--asc">
+                      Payment Currency A-Z
+                    </Select.Item>
+                    <Select.Item value="payment_currency--desc">
+                      Payment Currency Z-A
+                    </Select.Item>
+
+                    <Select.Item value="payment_amount--asc">
+                      Payment Amount A-Z
+                    </Select.Item>
+                    <Select.Item value="payment_amount--desc">
+                      Payment Amount Z-A
+                    </Select.Item>
+
+                    <Select.Item value="recurring--asc">
+                      Recurring A-Z
+                    </Select.Item>
+                    <Select.Item value="recurring--desc">
+                      Recurring Z-A
+                    </Select.Item>
+                  </Select.Content>
+                </Select.Root>
+              </Box>
               {cards}
             </Box>
           </Flex>
